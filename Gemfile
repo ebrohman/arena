@@ -33,6 +33,8 @@ gem 'pg', '~> 0.18.4'
 
 gem 'oj', '~> 3.3', '>= 3.3.9'
 
+gem 'sidekiq', '~> 5.0', '>= 5.0.4'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
