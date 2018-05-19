@@ -1,6 +1,8 @@
 class CreateBattlePets < ActiveRecord::Migration[5.0]
+  enable_extension "uuid-ossp"
+
   def change
-    create_table :battle_pets do |t|
+    create_table :battle_pets, id: :uuid do |t|
       t.string  :name
       t.integer :strength
       t.integer :speed
