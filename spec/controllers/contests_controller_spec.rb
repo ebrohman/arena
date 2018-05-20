@@ -41,16 +41,15 @@ RSpec.describe ContestsController, type: :request do
       end
     end
 
-    context "given invalid params" do
-      it "returns a bad request status" do
+    context "given invalid params - no ids" do
+      it "returns a 404" do
         post contests_url, params: {}
-        expect(response).to be_bad_request
+        expect(response.status).to eq 404
       end
 
       it "returns a helpful error message" do
         post contests_url, params: {}
-        expect(response.body).to match /Opponent can't be blank/
-        expect(response.body).to match /Challenger can't be blank/
+        expect(response.body).to match /Couldn't find BattlePet with 'id'=/
       end
     end
 
@@ -63,6 +62,20 @@ RSpec.describe ContestsController, type: :request do
 
       it "returns a 400 bad request" do
         expect(response).to be_bad_request
+      end
+    end
+
+    context "given invalid (non-existant) battle pet ids (opponent and challenger)" do
+      let(:create_params) do
+        {
+          challenger_id: SecureRandom.uuid,
+          opponent_id: SecureRandom.uuid
+        }
+      end
+
+      it "returns a 404" do
+        post contests_url, params: create_params
+        expect(response.status).to eq 404
       end
     end
   end

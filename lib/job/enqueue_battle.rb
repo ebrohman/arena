@@ -8,8 +8,6 @@ module Job
       contest = Contest.find(contest_id)
       contest.battle
       contest.save!
-    rescue ActiveRecord::RecordNotFound
-      nil
     rescue NameError
       raise BattleError, "Invalid Battle Strategy."
     end

@@ -8,22 +8,23 @@ class Contest < ApplicationRecord
   end
 
   def battle_strategy
-    "Strategy::#{strategy.capitalize}"
+    @_strategy ||= "Strategy::#{strategy.capitalize}"
       .constantize
       .new(opponent: find_opponent, challenger: find_challenger)
+  end
+
+  def validate_opposition!
+    find_opponent
+    find_challenger
   end
 
   private
 
   def find_opponent
-    BattlePet.find(opponent_id)
-  rescue
-    nil
+    @opponent ||= BattlePet.find(opponent_id)
   end
 
   def find_challenger
-    BattlePet.find(challenger_id)
-  rescue
-    nil
+    @challenger ||= BattlePet.find(challenger_id)
   end
 end

@@ -1,24 +1,21 @@
 module Command
   class CreateContest
-    attr_reader :errors
+    attr_reader :errors, :status
 
     CONTEST_PARAMS = %i( opponent_id challenger_id strategy).freeze
 
     def call(params)
       create_contest(params)
 
-      unless contest.valid?
-        @errors = contest.errors.full_messages
-        return
-      end
+      contest.save if contest.validate_opposition! && contest.valid?
 
-      contest.save
-      contest.id
+    rescue ActiveRecord::RecordNotFound => e
+      @errors = e.message
+      @status = 404
     end
 
-    def status
-      return 201 if contest.valid?
-      400
+    def contest_id
+      contest.id
     end
 
     def to_json
@@ -27,7 +24,7 @@ module Command
 
     private
 
-    attr_writer :errors
+    attr_writer :errors, :status
     attr_accessor :contest
 
     def create_contest(params)

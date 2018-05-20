@@ -1,11 +1,11 @@
 class ContestsController < ApplicationController
   def create
     cmd = Command::CreateContest.new
-    contest_id = cmd.call(contest_params)
+    cmd.call(contest_params)
 
-    return render(json: cmd.errors.to_json, status: 400) unless contest_id
+    return render(json: cmd.errors.to_json, status: cmd.status) if cmd.errors.present?
 
-    Job::EnqueueBattle.perform_async(contest_id)
+    Job::EnqueueBattle.perform_async(cmd.contest_id)
     render json: cmd.to_json, status: cmd.status
   rescue Job::EnqueueBattle::BattleError => e
     render json: e.message, status: 400
