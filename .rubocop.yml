@@ -7,3 +7,9 @@ Style/StringLiterals:
 
 Documentation:
   Enabled: false
+
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'

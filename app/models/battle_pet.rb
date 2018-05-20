@@ -1,3 +1,2 @@
 class BattlePet < ApplicationRecord
-
 end
