@@ -9,6 +9,15 @@ class ContestsController < ApplicationController
     render json: cmd.to_json, status: cmd.status
   end
 
+  def show
+    cmd = Command::ShowContest.new
+    result = cmd.call(params[:id])
+
+    render json: cmd.to_json, status: cmd.status
+  end
+
+  private
+
   def contest_params
     params
       .permit(:challenger_id, :opponent_id, :strategy)

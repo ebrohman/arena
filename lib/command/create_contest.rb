@@ -22,7 +22,7 @@ module Command
     end
 
     def to_json
-      { id: contest.id }
+      { contest_id: contest.id }
     end
 
     private
