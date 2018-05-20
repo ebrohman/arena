@@ -8,6 +8,8 @@ require 'rspec/rails'
 
 $LOAD_PATH.unshift(Rails.root.join("lib"))
 
+require 'sidekiq/testing'
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -39,6 +41,10 @@ RSpec.configure do |config|
     DatabaseCleaner.cleaning do
       example.run
     end
+  end
+
+  config.before(:each) do
+    Sidekiq::Testing.inline!
   end
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
