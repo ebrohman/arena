@@ -8,6 +8,7 @@ Bundler.require(*Rails.groups)
 
 Dotenv.load
 
+
 module Arena
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -15,3 +16,5 @@ module Arena
     # -- all .rb files in that directory are automatically loaded.
   end
 end
+
+Rails.application.config.autoload_paths << Rails.root.join('lib')

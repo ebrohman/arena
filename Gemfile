@@ -43,6 +43,7 @@ group :development, :test do
   gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
   gem 'rubocop', '~> 0.39.0'
   gem 'rspec-rails', '~> 3.4', '>= 3.4.2'
+  gem 'database_cleaner', '~> 1.5', '>= 1.5.3'
 end
 
 group :development do

@@ -27,8 +27,15 @@ ActiveRecord::Schema.define(version: 20180519181455) do
   end
 
   create_table "contests", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.uuid     "challenger_id", null: false
+    t.uuid     "opponent_id",   null: false
+    t.string   "strategy",      null: false
+    t.uuid     "winner_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["challenger_id"], name: "index_contests_on_challenger_id", using: :btree
+    t.index ["opponent_id"], name: "index_contests_on_opponent_id", using: :btree
+    t.index ["winner_id"], name: "index_contests_on_winner_id", using: :btree
   end
 
 end
