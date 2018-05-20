@@ -4,7 +4,7 @@ class Contest < ApplicationRecord
   validates :strategy, presence: true
 
   def battle
-    winner = battle_strategy.run
+    winner_id = battle_strategy.run
   end
 
   def battle_strategy

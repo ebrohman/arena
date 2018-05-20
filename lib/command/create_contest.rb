@@ -1,23 +1,24 @@
 module Command
   class CreateContest
-
     attr_reader :contest
+    attr_accessor :errors
 
     CONTEST_PARAMS = %i[ opponent_id challenger_id strategy].freeze
 
     def call(params)
-      # byebug
       @contest = Contest.new(
         strategy: params[:strategy] || "random",
         opponent_id: params[:opponent_id],
         challenger_id: params[:challenger_id]
       )
 
-      contest.battle
-      contest.save!
+      unless contest.valid?
+        @errors = contest.errors.full_messages
+        return
+      end
+
+      contest.save
       contest.id
-    rescue ActiveRecord::RecordInvalid => e
-      nil
     end
 
     def status
