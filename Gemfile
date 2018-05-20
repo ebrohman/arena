@@ -39,7 +39,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'rspec'
-  gem 'pry-rails'
+  gem 'pry-byebug'
   gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
   gem 'rubocop', '~> 0.39.0'
   gem 'rspec-rails', '~> 3.4', '>= 3.4.2'
