@@ -53,6 +53,18 @@ RSpec.describe ContestsController, type: :request do
         expect(response.body).to match /Challenger can't be blank/
       end
     end
+
+    context "given an invalid battle strategy" do
+      before { post contests_url, params: create_params.merge(strategy: "foobar") }
+
+      it "returns helpful information" do
+        expect(response.body).to match /Invalid Battle Strategy/
+      end
+
+      it "returns a 400 bad request" do
+        expect(response).to be_bad_request
+      end
+    end
   end
 
   describe "GET" do

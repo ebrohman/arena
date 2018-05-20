@@ -7,6 +7,8 @@ class ContestsController < ApplicationController
 
     Job::EnqueueBattle.perform_async(contest_id)
     render json: cmd.to_json, status: cmd.status
+  rescue Job::EnqueueBattle::BattleError => e
+    render json: e.message, status: 400
   end
 
   def show
