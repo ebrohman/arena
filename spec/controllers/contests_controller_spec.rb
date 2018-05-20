@@ -31,8 +31,8 @@ RSpec.describe ContestsController, type: :request do
       end
 
       it "creates a Contest" do
-        expect { post contests_url, params: params }.
-          to change { Contest.count }.by 1
+        expect { post contests_url, params: params }
+          .to change { Contest.count }.by 1
       end
 
       it "returns the contest :id in the payload" do

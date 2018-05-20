@@ -3,14 +3,10 @@ module Command
     attr_reader :contest
     attr_accessor :errors
 
-    CONTEST_PARAMS = %i[ opponent_id challenger_id strategy].freeze
+    CONTEST_PARAMS = %i( opponent_id challenger_id strategy).freeze
 
     def call(params)
-      @contest = Contest.new(
-        strategy: params[:strategy] || "random",
-        opponent_id: params[:opponent_id],
-        challenger_id: params[:challenger_id]
-      )
+      create_contest(params)
 
       unless contest.valid?
         @errors = contest.errors.full_messages
@@ -28,6 +24,16 @@ module Command
 
     def to_json
       { id: contest.id }
+    end
+
+    private
+
+    def create_contest(params)
+      @contest = Contest.new(
+        strategy: params[:strategy] || "random",
+        opponent_id: params[:opponent_id],
+        challenger_id: params[:challenger_id]
+      )
     end
   end
 end
