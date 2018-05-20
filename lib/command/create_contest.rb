@@ -1,7 +1,6 @@
 module Command
   class CreateContest
-    attr_reader :contest
-    attr_accessor :errors
+    attr_reader :errors
 
     CONTEST_PARAMS = %i( opponent_id challenger_id strategy).freeze
 
@@ -27,6 +26,9 @@ module Command
     end
 
     private
+
+    attr_writer :errors
+    attr_accessor :contest
 
     def create_contest(params)
       @contest = Contest.new(
