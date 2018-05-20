@@ -43,6 +43,7 @@ group :development, :test do
   gem 'rubocop', '~> 0.49.0'
   gem 'rspec-rails', '~> 3.4', '>= 3.4.2'
   gem 'database_cleaner', '~> 1.5', '>= 1.5.3'
+  gem 'simplecov', '~> 0.12.0'
 end
 
 group :development do
