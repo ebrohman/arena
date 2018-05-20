@@ -3,6 +3,8 @@ class Contest < ApplicationRecord
   validates :challenger_id, presence: true
   validates :strategy, presence: true
 
+  attr_reader :opponent, :challenger
+
   def battle
     self.winner_id = battle_strategy.run
   end

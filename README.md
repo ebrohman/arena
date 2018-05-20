@@ -73,3 +73,6 @@
       ```
     - battle status
       - the status of a battle can be read from this endpoint.  Battles are run in a background job and once a winner is determined, it is recorded and persisted to the database.  The absence of a `winner_id` indicates the the battle is still pending.
+
+* Battle Runner
+  - there is a rake task that can be invoked to run an arbitrary battle, to invoke it use `bundle exec rake battle`.  This will fetch battle pet data from heroku and requires one's .env to be set with an API_KEY and also for redis and postgres to be running.
