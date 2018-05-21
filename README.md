@@ -1,8 +1,15 @@
 # Battle Pets Arena
 
-* Development Considerations
-  - I choose Rails because it was easy to get running and most are familiar with some of its tooling and patterns.
+* Development considerations
+  - I chose Rails because it was easy to get running and most are familiar with its tooling and patterns.
   - Due to time constraints, I have not removed the view layer, action cable, and other extraneous things from the project that come with Rails scaffolding.
+
+* Code design and organization
+  - I'm using a command pattern to decouple requests from the logic of battle
+  - There is a single `Contest` model and it can use various "strategies" to do battle
+  - Contests are run in background jobs using Sidekiq
+  - Contests are persisted and can be queried for in order to find out the winner
+  - Most of the code of interest is in `lib`
 
 * Assumptions
   - The client of this service knows the identifiers of the pets that are to do battle
@@ -11,9 +18,8 @@
   - I'm running this with `2.4.3` using `rvm`
 
 * System dependencies
-  - hard dependencies
-    - postgresql
-    - redis
+  - `postgresql`
+  - `redis`
 
   - I have the native postgres for mac @ version `9.4.0.1`
   - I have redis installed through brew
@@ -26,7 +32,7 @@
   - `bundle exec rake db:setup` or however you prefer to run your db migrations, i.e. `db:create`, `db:migrate`, `db:seed`, etc.
 
 * Database seeding for development
-  - `bundle exec rake refresh_pets` will pull battle pet data from Heroku and load it into your development database.
+  - There are a couple of seeds in `seeds.rb`, but `bundle exec rake refresh_pets` will pull all battle pet data from Heroku and load it into your development database.
 
 * How to run the test suite
   - `RAILS_ENV=test bundle exec rake db:create`
@@ -39,7 +45,7 @@
 
 * Using the app
   - The endpoints are as follows:
-    - `POST /contest`
+    - `POST /contests`
       - params:
         ```
           {
@@ -54,7 +60,7 @@
         ```
     - here, `challenger_id` and `opponent_id` are the ids of various battle pets.  `strategy` is the strategy type to use to do battle.  A `Strategy` is where the battle logic is encapsulated.  Current options are "random" or "attrition".  New battle strategies can be added to the code by simply following naming convention and some template methods.
 
-  - `GET /contest/:id`
+  - `GET /contests/:id`
     - params:
       ```
         { "id": <uuid> }
